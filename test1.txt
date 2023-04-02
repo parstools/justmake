@@ -1,4 +1,14 @@
-a 1
-b 2
- c \
- 3
+proj = Project("Parser")
+cmake_parser_src = Source(["cmake_driver","don't know"])
+cpp_parser_src = Source(["cpp_driver"])
+cmake_g4 = Source(["CMakeLexer.g4","CMakeParser.g4"])
+cpp_g4 = Source(["CPP14Lexer.g4","CPP14Parser.g4"])
+antr = Required( Executable)
+anlr_runtime_static = Required( Static)
+generated_files_cpp = Required(Files)
+cpp_parser = Target(Executable,"cpp_parser")
+cpp_parser.add_sources(["cmake_driver.cpp"]+generated_files_cpp.output)
+cpp_parser.add_libraries([])
+cpp_parser.add_include_dirs([])
+cmake_parser = Target(Executable,"cmake_parser")
+cpp_parser_lib = Target(Static,"cpp_parser")

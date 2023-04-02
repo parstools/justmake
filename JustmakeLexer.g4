@@ -29,6 +29,26 @@ StringLiteral
     :   '"' SCharSequence? '"'
     ;
 
+// Separators
+LPARENT:             '(';
+RPARENT:             ')';
+LBRACE:             '{';
+RBRACE:             '}';
+LSQUARE:            '[';
+RSQUARE:            ']';
+SEMI:               ';';
+COMMA:              ',';
+DOT:                '.';
+COLON:              ':';
+
+// Operators
+ASSIGN:             '=';
+ADD:                '+';
+MUL:                '*';
+
+FN
+    : 'fn'
+    ;
 
 Identifier
     :   AsciiLetter
@@ -59,7 +79,7 @@ SCharSequence
 
 fragment
 SChar
-    :   ~["\\\r\n]
+    :   ~["\\\r\n\t]
     |   EscapeSequence
     ;
 
@@ -73,6 +93,8 @@ fragment SimpleEscapeSequence
 	: '\\n'
 	| '\\r'
 	| '\\t'
+	| '\\\\'
+	| '\\"'
 	;
 
 Integer
