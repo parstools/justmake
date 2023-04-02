@@ -1,3 +1,7 @@
+thirdparty/
+*build*/
+.idea/
+
 # Prerequisites
 *.d
 
