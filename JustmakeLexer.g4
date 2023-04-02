@@ -45,9 +45,42 @@ COLON:              ':';
 ASSIGN:             '=';
 ADD:                '+';
 MUL:                '*';
+Arrow:              '->';
+
+//Relational Operators
+EQ:                 '==';
+NEQ:                '!=';
+LT:                 '<';
+LTE:                '<=';
+GT:                 '>';
+GTE:                '>=';
 
 FN
     : 'fn'
+    ;
+
+LIST
+    : 'list'
+    ;
+
+IF
+    : 'if'
+    ;
+
+ELSEIF
+    : 'elseif'
+    ;
+
+ELSE
+    : 'else'
+    ;
+
+ENDIF
+    : 'endif'
+    ;
+
+RETURN
+    : 'return'
     ;
 
 Identifier
@@ -99,6 +132,7 @@ fragment SimpleEscapeSequence
 
 Integer
     : NonzeroDigit Digit*
+    | '0'
     ;
 
 fragment

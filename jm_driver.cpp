@@ -23,15 +23,15 @@ public:
 };
 
 int main(int , const char **) {
-    std::ifstream ifs("../test/test1.jumake");
+    std::ifstream ifs("../test/test2.jumake");
     ANTLRInputStream input(ifs);
     JustmakeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
 
     tokens.fill();
-    for (auto token : tokens.getTokens()) {
-        std::cout << token->toString() << std::endl;
-    }
+//    for (auto token : tokens.getTokens()) {
+//        std::cout << token->toString() << std::endl;
+//    }
 
     CMakeListnener listener;
     JustmakeParser parser(&tokens);

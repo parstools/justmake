@@ -10,31 +10,67 @@ document
     :  statements EOF
     ;
 
+commands
+    : command (Newline+ command)* Newline*
+    ;
+
 statements
     : statement (Newline+ statement)* Newline*
     ;
 
-statement
+command
     : assignment
     | methodCall
+    | if_statement
+    | return_statement
+    ;
+
+statement
+    : command
     | funcDef
     ;
 
+return_statement
+    : RETURN expression
+    ;
+
 funcDef
-    : FN LPARENT parameterList? RPARENT funcBlock
+    : FN Identifier LPARENT parameterLists RPARENT funcResult? funcBlock
+    ;
+
+parameterLists
+    : parameterList
+    | defaultParameterList
+    | parameterList COMMA defaultParameterList
+    |
     ;
 
 funcBlock
-    : LBRACE statements RBRACE
+    : LBRACE Newline statements RBRACE
     ;
 
+funcResult
+    : Arrow type
+    ;
+
+type
+    : LIST
+    ;
 
 parameterList
     : parameter (COMMA parameter)*
     ;
 
+defaultParameterList
+    : defaultParameter (COMMA defaultParameter)*
+    ;
+
 parameter
     :   Identifier
+    ;
+
+defaultParameter
+    :   Identifier ASSIGN simpleTerm
     ;
 
 methodCall
@@ -59,8 +95,21 @@ expression
     | term
     ;
 
-term
+condition
+    : expression relationalOperator expression
+    ;
+
+relationalOperator
+    : EQ | NEQ | LT | LTE | GT | GTE
+    ;
+
+simpleTerm
     : StringLiteral
+    | Integer
+    ;
+
+term
+    : simpleTerm
     | listInPlace
     | variableAccess
     | methodCall
@@ -71,13 +120,7 @@ listInPlace
     ;
 
 listElements
-    : listElement (COMMA listElements)*
-    ;
-
-listElement
-    : variable
-    | StringLiteral
-    | listInPlace
+    : expression (COMMA Newline? expression)*
     ;
 
 variable
@@ -86,4 +129,8 @@ variable
 
 assignment
     : variableAccess ASSIGN expression
+    ;
+
+if_statement
+    : IF condition Newline commands (ELSEIF condition Newline commands)? (ELSE Newline commands)? ENDIF
     ;

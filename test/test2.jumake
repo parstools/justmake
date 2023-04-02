@@ -1,0 +1,26 @@
+proj= Project("parser")
+add_grammar("C",1)
+add_grammar("Cpp14")
+add_grammar("Jumake")
+add_grammar("CMake")
+
+fn get_gram_fnames(grammar_name, num_files=2) ->list {
+    if num_files==2
+        return [grammar_name+"Lexer.g4", \
+                        grammar_name+"Parser.g4"]
+    elseif num_files==1
+        return grammar_name+".g4"
+    else
+        message(ERROR, "grammar must have 1 or 2 files, instead of s%", num_files)
+    endif
+}
+
+fn add_grammar(grammar_name, num_files=2) {
+    gram_fnames = get_gram_fnames(grammar_name, num_files)
+    target = Target(Executable,grammar_name+"_parser")
+    generated_files = Required(POOL)
+    gram_dir = "gr/"+grammar_name
+    target.add_sources(gram_dir+"/"+[grammar_name+"_driver.cpp"]+generated_files_cpp.output)
+    target.add_libraries(["boost_system", "pthread"])
+    target.add_include_dirs(["templates"])
+}
