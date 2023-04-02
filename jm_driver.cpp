@@ -23,7 +23,7 @@ public:
 };
 
 int main(int , const char **) {
-    std::ifstream ifs("../test1.txt");
+    std::ifstream ifs("../test/test1.jumake");
     ANTLRInputStream input(ifs);
     JustmakeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
