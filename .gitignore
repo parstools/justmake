@@ -1,6 +1,7 @@
 thirdparty/
 *build*/
 .idea/
+gen/
 
 # Prerequisites
 *.d
